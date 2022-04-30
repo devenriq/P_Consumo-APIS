@@ -1,9 +1,9 @@
 "use strict";
 const API_URL_RANDOM =
-  "https://api.thedogapi.com/v1/images/search?limit=2&api_key=618c7cbe-dc52-4731-bb80-21e27330cc00";
+  "https://api.thecatapi.com/v1/images/search?limit=2&5d4bf7e0-d05e-4483-b7eb-5657787c908c";
 
 const API_URL_FAVORITES =
-  "https://api.thedogapi.com/v1/favourites?limit=2&api_key=618c7cbe-dc52-4731-bb80-21e27330cc00";
+  "https://api.thecatapi.com/v1/favourites?api_key=5d4bf7e0-d05e-4483-b7eb-5657787c908c";
 
 const spanError = document.getElementById("error");
 
@@ -39,7 +39,7 @@ async function loadFavoriteDoggos() {
     console.log("Favoritos", data);
 
     if (response.status !== 200) {
-      spanError.innerHTML = "Hubo un error " + response.status;
+      spanError.innerHTML = "Hubo un error " + response.status + data.message;
     } else {
       data.forEach((dog) => {
         const section = document.getElementById("favoriteDoggos");
