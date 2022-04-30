@@ -7,7 +7,7 @@ const API_URL_FAVORITES =
 
 const spanError = document.getElementById("error");
 
-async function loadRandomDoggos() {
+async function loadRandomCattos() {
   try {
     const response = await fetch(API_URL_RANDOM);
     const data = await response.json();
@@ -22,8 +22,8 @@ async function loadRandomDoggos() {
       img1.src = data[0].url;
       img2.src = data[1].url;
 
-      btn1.onclick = () => saveFavoriteDoggo(data[0].id);
-      btn2.onclick = () => saveFavoriteDoggo(data[1].id);
+      btn1.onclick = () => saveFavoriteCatto(data[0].id);
+      btn2.onclick = () => saveFavoriteCatto(data[1].id);
     }
 
     console.log(data[0].id);
@@ -32,7 +32,7 @@ async function loadRandomDoggos() {
   }
 }
 
-async function loadFavoriteDoggos() {
+async function loadFavoriteCattos() {
   try {
     const response = await fetch(API_URL_FAVORITES);
     const data = await response.json();
@@ -41,16 +41,16 @@ async function loadFavoriteDoggos() {
     if (response.status !== 200) {
       spanError.innerHTML = "Hubo un error " + response.status + data.message;
     } else {
-      data.forEach((dog) => {
-        const section = document.getElementById("favoriteDoggos");
+      data.forEach((cat) => {
+        const section = document.getElementById("favoriteCattos");
         const article = document.createElement("article");
         const img = document.createElement("img");
         const btn = document.createElement("button");
         const btnText = document.createTextNode(
-          "Take out the dog of favorites"
+          "Take out the cat of favorites"
         );
 
-        img.src = dog["image"]["url"];
+        img.src = cat["image"]["url"];
         img.width = 300;
         btn.appendChild(btnText);
         article.appendChild(img);
@@ -63,7 +63,7 @@ async function loadFavoriteDoggos() {
   }
 }
 
-async function saveFavoriteDoggo(id) {
+async function saveFavoriteCatto(id) {
   const response = await fetch(API_URL_FAVORITES, {
     method: "POST",
     headers: {
@@ -81,5 +81,5 @@ async function saveFavoriteDoggo(id) {
   }
 }
 
-loadRandomDoggos();
-loadFavoriteDoggos();
+loadRandomCattos();
+loadFavoriteCattos();
