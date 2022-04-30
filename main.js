@@ -5,6 +5,9 @@ const API_URL_RANDOM =
 const API_URL_FAVORITES =
   "https://api.thecatapi.com/v1/favourites?api_key=5d4bf7e0-d05e-4483-b7eb-5657787c908c";
 
+const API_URL_FAVORITES_DELETE = (id) =>
+  `https://api.thecatapi.com/v1/favourites/${id}?api_key=5d4bf7e0-d05e-4483-b7eb-5657787c908c`;
+
 const spanError = document.getElementById("error");
 
 async function loadRandomCattos() {
@@ -41,6 +44,15 @@ async function loadFavoriteCattos() {
     if (response.status !== 200) {
       spanError.innerHTML = "Hubo un error " + response.status + data.message;
     } else {
+      const section = document.getElementById("favoriteCattos");
+
+      section.innerHTML = "";
+      const h2 = document.createElement("h2");
+      const h2Text = document.createTextNode("Favorites Cattos");
+
+      h2.appendChild(h2Text);
+      section.appendChild(h2);
+
       data.forEach((cat) => {
         const section = document.getElementById("favoriteCattos");
         const article = document.createElement("article");
@@ -53,6 +65,7 @@ async function loadFavoriteCattos() {
         img.src = cat["image"]["url"];
         img.width = 300;
         btn.appendChild(btnText);
+        btn.onclick = () => deleteFavoriteCattos(cat["id"]);
         article.appendChild(img);
         article.appendChild(btn);
         section.appendChild(article);
@@ -78,6 +91,23 @@ async function saveFavoriteCatto(id) {
 
   if (response.status !== 200) {
     spanError.innerHTML = "Hubo un error " + response.status + data.message;
+  } else {
+    console.log("Catto saved in favorites");
+    loadFavoriteCattos();
+  }
+}
+
+async function deleteFavoriteCattos(id) {
+  const response = await fetch(API_URL_FAVORITES_DELETE(id), {
+    method: "DELETE",
+  });
+
+  const data = await response.json();
+  if (response.status !== 200) {
+    spanError.innerHTML = "Hubo un error " + response.status + data.message;
+  } else {
+    console.log("Catto deleted from favorites");
+    loadFavoriteCattos();
   }
 }
 
