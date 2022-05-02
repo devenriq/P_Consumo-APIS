@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Doggo API</title>
+    <title>Catto API</title>
   </head>
   <body>
     <h1>CattosAPP</h1>
@@ -16,24 +16,35 @@
 
       <article>
         <img width="300px" id="img1" alt="Foto de perrito aleatorio" />
-        <button id="btn1">Save Doggo in favorites</button>
+        <button id="btn1">Save Catto in favorites</button>
       </article>
 
       <article>
         <img width="300px" id="img2" alt="Foto de perrito aleatorio" />
-        <button id="btn2">Save Doggo in favorites</button>
+        <button id="btn2">Save Catto in favorites</button>
       </article>
 
       <button onclick="loadRandomCattos()" class="butt">
-        Change the doggo
+        Change the catto
       </button>
+    </section>
+
+    <section id="uploadingCatto">
+      <h2>Sube la foto de tu Catto</h2>
+
+      <form id="uploadingForm">
+        <input type="file" id="file" name="file" />
+        <button type="button" onclick="uploadCattoPhoto()">
+          Upload Catto Photo
+        </button>
+      </form>
     </section>
 
     <section id="favoriteCattos">
       <h2>Favorites Cattos</h2>
 
       <!-- <img width="300px" id="img1" alt="Foto de perrito favorito" />
-      <button>Pop the Doggo in favorites</button> -->
+      <button>Pop the Catto in favorites</button> -->
     </section>
 
     <script src="./main.js"></script>

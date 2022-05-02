@@ -2,11 +2,12 @@
 const API_URL_RANDOM =
   "https://api.thecatapi.com/v1/images/search?limit=2&5d4bf7e0-d05e-4483-b7eb-5657787c908c";
 
-const API_URL_FAVORITES =
-  "https://api.thecatapi.com/v1/favourites?api_key=5d4bf7e0-d05e-4483-b7eb-5657787c908c";
+const API_URL_FAVORITES = "https://api.thecatapi.com/v1/favourites";
 
 const API_URL_FAVORITES_DELETE = (id) =>
   `https://api.thecatapi.com/v1/favourites/${id}?api_key=5d4bf7e0-d05e-4483-b7eb-5657787c908c`;
+
+const API_URL_UPLOAD = "https://api.thecatapi.com/v1/image/upload";
 
 const spanError = document.getElementById("error");
 
@@ -37,7 +38,12 @@ async function loadRandomCattos() {
 
 async function loadFavoriteCattos() {
   try {
-    const response = await fetch(API_URL_FAVORITES);
+    const response = await fetch(API_URL_FAVORITES, {
+      method: "GET",
+      headers: {
+        "X-API-KEY": "5d4bf7e0-d05e-4483-b7eb-5657787c908c",
+      },
+    });
     const data = await response.json();
     console.log("Favoritos", data);
 
@@ -80,6 +86,7 @@ async function saveFavoriteCatto(id) {
   const response = await fetch(API_URL_FAVORITES, {
     method: "POST",
     headers: {
+      "X-API-KEY": "5d4bf7e0-d05e-4483-b7eb-5657787c908c",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -107,6 +114,30 @@ async function deleteFavoriteCattos(id) {
     spanError.innerHTML = "Hubo un error " + response.status + data.message;
   } else {
     console.log("Catto deleted from favorites");
+    loadFavoriteCattos();
+  }
+}
+
+async function uploadCattoPhoto() {
+  const form = document.getElementById("uploadingForm");
+  const formData = new FormData(form);
+
+  console.log(formData.get("file"));
+
+  const response = await fetch(API_URL_UPLOAD, {
+    method: "POST",
+    headers: {
+      // "Content-Type": "multipart/form-data",
+      "X-API-KEY": "5d4bf7e0-d05e-4483-b7eb-5657787c908c",
+    },
+    body: formData,
+  });
+
+  const data = await response.json();
+  if (response.status !== 200) {
+    spanError.innerHTML = "Hubo un error " + response.status + data.message;
+  } else {
+    console.log("Catto uploaded");
     loadFavoriteCattos();
   }
 }
